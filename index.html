@@ -1,66 +1,300 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1220">
-  <meta name="description" content="ClimaAlert provides current weather and a five-day forecast for cities in Nigeria and around the world.">
-  <title>ClimaAlert | Weather, made clear</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./src/css/styles.css">
-  <script src="./src/js/app.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClimaAlert NG - Weather Forecast</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    input, button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    input {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      outline: none;
+    }
+    button {
+      background-color: #f39c12;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #d68910;
+    }
+    .weather-result {
+      margin-top: 20px;
+      background: rgba(0,0,0,0.25);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+    }
+    .forecast-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .forecast-card {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 12px;
+      border-radius: 12px;
+      width: 110px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+    .forecast-card h4 {
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .forecast-card p {
+      font-size: 0.9rem;
+      margin: 2px 0;
+    }
+    .slogan {
+      margin-top: 30px;
+      font-size: 1rem;
+      color: #dbeafe;
+      text-align: center;
+      font-style: italic;
+    }
+    footer {
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <main class="app-shell">
-    <header class="topbar">
-      <a class="brand" href="./" aria-label="ClimaAlert home"><span class="brand-mark" aria-hidden="true">C</span><span>ClimaAlert</span></a>
-      <span class="topbar-note">Weather at a glance</span>
-    </header>
+  <div class="container">
+    <h1>ClimaAlert NG</h1>
+    <input type="text" id="cityInput" placeholder="Enter Nigerian City (e.g., Lagos, Enugu)" />
+    <button onclick="manualWeather()">Check Weather</button>
+    <div class="weather-result" id="weatherDisplay"></div>
+    <div class="forecast-container" id="forecastDisplay"></div>
+    <p class="slogan">"Your Local Sky. Your Daily Guide."</p>
+  </div>
+  <footer>
+    &copy; 2025 Manuel Technologies. All rights reserved.
+  </footer>
 
-    <section class="hero" aria-labelledby="page-title">
-      <p class="eyebrow">YOUR DAY, FORECAST</p>
-      <h1 id="page-title">Know the sky<br><span>before you step out.</span></h1>
-      <p class="hero-copy">Clear, useful weather updates for wherever life takes you.</p>
-    </section>
-
-    <form class="search-form" id="searchForm" role="search">
-      <label class="sr-only" for="cityInput">Search city</label>
-      <span class="search-icon" aria-hidden="true">⌕</span>
-      <input id="cityInput" name="city" type="search" placeholder="Search a city, e.g. Lagos" autocomplete="off" required>
-      <button class="search-button" type="submit">Search</button>
-    </form>
-    <button class="location-button" id="locationButton" type="button">◎ Use my location</button>
-
-    <p class="status" id="status" role="status" aria-live="polite">Search for a city to see its weather.</p>
-
-    <section class="weather-panel" id="weatherPanel" aria-label="Current weather" hidden>
-      <div class="current-weather">
-        <div class="current-copy">
-          <p class="eyebrow" id="weatherLabel">CURRENT WEATHER</p>
-          <h2 id="placeName">--</h2>
-          <p class="weather-description" id="weatherDescription">--</p>
-          <p class="feels-like" id="feelsLike">Feels like --°</p>
-        </div>
-        <div class="temperature-wrap">
-          <span class="weather-symbol" id="weatherSymbol" aria-hidden="true">☀</span>
-          <p class="temperature"><span id="temperature">--</span><span class="degree">°C</span></p>
-        </div>
-      </div>
-      <div class="metrics">
-        <article class="metric"><span class="metric-icon" aria-hidden="true">↗</span><span class="metric-label">Wind speed</span><strong id="windSpeed">-- km/h</strong></article>
-        <article class="metric"><span class="metric-icon" aria-hidden="true">◌</span><span class="metric-label">Humidity</span><strong id="humidity">--%</strong></article>
-        <article class="metric"><span class="metric-icon" aria-hidden="true">☼</span><span class="metric-label">UV index</span><strong id="uvIndex">--</strong></article>
-      </div>
-    </section>
-
-    <section class="forecast-section" id="forecastSection" aria-labelledby="forecastTitle" hidden>
-      <div class="section-heading"><div><p class="eyebrow">PLAN AHEAD</p><h2 id="forecastTitle">5-day forecast</h2></div><span class="section-caption">Daily outlook</span></div>
-      <div class="forecast-grid" id="forecastGrid"></div>
-    </section>
-
-    <footer><span>ClimaAlert</span><span>Weather data by Open-Meteo</span></footer>
-  </main>
+  <script>
+      const apiKey = '01cdba5f4b89efc2a0b20a7311fdc929';
+      const display = document.getElementById('weatherDisplay');
+      const forecastDisplay = document.getElementById('forecastDisplay');
+      const cityInput = document.getElementById('cityInput');
+  
+      async function fetchJson(url) {
+        const response = await fetch(url);
+        let data;
+  
+        try {
+          data = await response.json();
+        } catch {
+          throw new Error('The weather service returned an invalid response.');
+        }
+  
+        if (!response.ok) {
+          throw new Error(data.message || 'Unable to retrieve weather for this location.');
+        }
+  
+        return data;
+      }
+  
+      function showError(message) {
+        display.replaceChildren();
+        const paragraph = document.createElement('p');
+        paragraph.style.color = '#ffcccc';
+        const strong = document.createElement('strong');
+        strong.textContent = 'Error: ';
+        paragraph.append(strong, document.createTextNode(message));
+        display.appendChild(paragraph);
+        forecastDisplay.replaceChildren();
+      }
+  
+      function addLine(parent, label, value) {
+        const paragraph = document.createElement('p');
+        const strong = document.createElement('strong');
+        strong.textContent = label + ': ';
+        paragraph.append(strong, document.createTextNode(String(value)));
+        parent.appendChild(paragraph);
+      }
+  
+      function renderWeather(data) {
+        const weather = data.weather && data.weather[0];
+        if (!data.main || !weather || !data.wind) {
+          throw new Error('The weather service returned incomplete weather data.');
+        }
+  
+        display.replaceChildren();
+        const heading = document.createElement('h2');
+        heading.textContent = data.name || 'Selected location';
+        display.appendChild(heading);
+        addLine(display, '🌡️ Temperature', Math.round(data.main.temp) + '°C');
+        addLine(display, '🌤️ Condition', weather.description);
+        addLine(display, '💧 Humidity', data.main.humidity + '%');
+        addLine(display, '💨 Wind Speed', data.wind.speed + ' m/s');
+      }
+  
+      function renderForecast(data) {
+        if (!Array.isArray(data.list)) {
+          throw new Error('The forecast service returned incomplete data.');
+        }
+  
+        forecastDisplay.replaceChildren();
+        const dailyForecasts = [];
+        const seenDates = new Set();
+  
+        for (const item of data.list) {
+          if (!item.dt_txt || !item.main || !Array.isArray(item.weather) || !item.weather[0]) continue;
+          const dateKey = item.dt_txt.slice(0, 10);
+          if (seenDates.has(dateKey)) continue;
+          seenDates.add(dateKey);
+          dailyForecasts.push(item);
+          if (dailyForecasts.length === 5) break;
+        }
+  
+        for (const day of dailyForecasts) {
+          const card = document.createElement('div');
+          card.className = 'forecast-card';
+          const heading = document.createElement('h4');
+          const date = new Date(day.dt_txt.replace(' ', 'T') + 'Z');
+          heading.textContent = date.toLocaleDateString('en-NG', {
+            weekday: 'short',
+            timeZone: 'UTC'
+          });
+          const temperature = document.createElement('p');
+          temperature.textContent = '🌡️ ' + Number(day.main.temp).toFixed(1) + '°C';
+          const condition = document.createElement('p');
+          condition.textContent = day.weather[0].description;
+          card.append(heading, temperature, condition);
+          forecastDisplay.appendChild(card);
+        }
+      }
+  
+      async function getWeather(city) {
+        const normalizedCity = city.trim();
+        if (!normalizedCity) {
+          showError('Enter a city name to check the weather.');
+          cityInput.focus();
+          return;
+        }
+  
+        display.textContent = 'Loading weather...';
+        forecastDisplay.replaceChildren();
+  
+        try {
+          const query = encodeURIComponent(normalizedCity);
+          const current = await fetchJson(
+            'https://api.openweathermap.org/data/2.5/weather?q=' + query +
+            ',NG&appid=' + encodeURIComponent(apiKey) + '&units=metric'
+          );
+          renderWeather(current);
+  
+          const forecast = await fetchJson(
+            'https://api.openweathermap.org/data/2.5/forecast?q=' + query +
+            ',NG&appid=' + encodeURIComponent(apiKey) + '&units=metric'
+          );
+          renderForecast(forecast);
+        } catch (error) {
+          showError(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+        }
+      }
+  
+      async function getWeatherByCoords(lat, lon) {
+        display.textContent = 'Loading weather...';
+        forecastDisplay.replaceChildren();
+  
+        try {
+          const coordinates = 'lat=' + encodeURIComponent(lat) +
+            '&lon=' + encodeURIComponent(lon) +
+            '&appid=' + encodeURIComponent(apiKey) + '&units=metric';
+          const current = await fetchJson(
+            'https://api.openweathermap.org/data/2.5/weather?' + coordinates
+          );
+          renderWeather(current);
+  
+          const forecast = await fetchJson(
+            'https://api.openweathermap.org/data/2.5/forecast?lat=' +
+            encodeURIComponent(lat) + '&lon=' + encodeURIComponent(lon) +
+            '&appid=' + encodeURIComponent(apiKey) + '&units=metric'
+          );
+          renderForecast(forecast);
+        } catch (error) {
+          showError(error instanceof Error ? error.message : 'Unable to retrieve weather for your location.');
+        }
+      }
+  
+      function detectLocationWeather() {
+        if (!navigator.geolocation) {
+          display.textContent = 'Geolocation is not supported. Enter a city manually.';
+          return;
+        }
+  
+        navigator.geolocation.getCurrentPosition(
+          position => getWeatherByCoords(position.coords.latitude, position.coords.longitude),
+          () => {
+            display.textContent = 'Location access unavailable. Enter a city manually.';
+          },
+          { timeout: 10000, maximumAge: 300000 }
+        );
+      }
+  
+      function manualWeather() {
+        getWeather(cityInput.value);
+      }
+  
+      cityInput.addEventListener('keydown', event => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          manualWeather();
+        }
+      });
+  
+      window.addEventListener('load', detectLocationWeather);
+    </script>
 </body>
 </html>
