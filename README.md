@@ -1,53 +1,39 @@
-# ClimaAlert
+# ClimaAlert NG
 
-A responsive weather dashboard with current conditions and a five-day forecast for cities worldwide, including Nigerian cities.
-
-## Features
-
-- City search with location and country details
-- Current temperature, feels-like temperature, humidity, wind speed, and UV index
-- Five-day daily forecast
-- Optional browser geolocation
-- Responsive desktop and mobile layout
-- No API key or build step required
-
-## Technology
-
-- HTML, CSS, and vanilla JavaScript
-- [Open-Meteo Forecast API](https://open-meteo.com/en/docs)
-- [Open-Meteo Geocoding API](https://open-meteo.com/en/docs/geocoding-api)
+ClimaAlert NG is a lightweight weather app for checking current conditions and a five-day forecast for Nigerian cities.
 
 ## Run locally
 
-Because browser geolocation requires a secure context, use localhost rather than opening the HTML file directly.
+Open `index.html` through a local static server. Browser geolocation generally requires HTTPS or localhost.
 
-With Python installed:
+For example, with Python installed:
 
 ```bash
 python -m http.server 8000
 ```
 
-Then visit http://localhost:8000.
-
-Alternatively, use any static file server. There is no package installation or compilation step.
+Then open http://localhost:8000.
 
 ## Deploy
 
-### GitHub Pages
-1. Open the repository's **Settings → Pages**.
-2. Under Build and deployment, select **Deploy from a branch**.
-3. Select the deployment branch and the `/` (root) folder, then save.
-4. Wait for the Pages deployment workflow to finish.
+This is a static HTML, CSS, and JavaScript site. No package installation or build command is required.
 
-### Vercel or Netlify
-Import the repository and use these settings:
-- Framework preset: **Other** / static site
-- Build command: leave empty
-- Output directory: `.`
-- Install command: leave empty
+- **Vercel / Netlify:** set the project root as the output/publish directory and leave build and install commands empty.
+- **GitHub Pages:** choose the deployment branch and the root folder in Settings → Pages.
 
-The root `index.html` is the entry point. No secrets or environment variables are required.
+The root `index.html` is the deployment entry point.
 
-## Notes
+## Weather API key
 
-Weather data is supplied by Open-Meteo. Network access is required. Browser geolocation is optional and only runs after the user presses **Use my location**.
+The app currently calls the OpenWeatherMap API directly from the browser. A key embedded in frontend JavaScript is visible to visitors. Rotate the existing key if it has been exposed, and restrict it to the intended API and domains where OpenWeatherMap supports those controls. For stronger protection, move API calls behind a server-side endpoint.
+
+## Project structure
+
+```text
+ClimaAlert/
+├── index.html
+├── ClimaUpdated.html
+├── doc/
+│   └── updated.html
+└── README.md
+```
