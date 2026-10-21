@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="ClimaAlert provides current weather and a five-day forecast for cities in Nigeria and around the world.">
+  <title>ClimaAlert | Weather, made clear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/css/styles.css">
+  <script src="./src/js/app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="ClimaAlert home"><span class="brand-mark" aria-hidden="true">C</span><span>ClimaAlert</span></a>
+      <span class="topbar-note">Weather at a glance</span>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">YOUR DAY, FORECAST</p>
+      <h1 id="page-title">Know the sky<br><span>before you step out.</span></h1>
+      <p class="hero-copy">Clear, useful weather updates for wherever life takes you.</p>
+    </section>
+
+    <form class="search-form" id="searchForm" role="search">
+      <label class="sr-only" for="cityInput">Search city</label>
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <input id="cityInput" name="city" type="search" placeholder="Search a city, e.g. Lagos" autocomplete="off" required>
+      <button class="search-button" type="submit">Search</button>
+    </form>
+    <button class="location-button" id="locationButton" type="button">◎ Use my location</button>
+
+    <p class="status" id="status" role="status" aria-live="polite">Search for a city to see its weather.</p>
+
+    <section class="weather-panel" id="weatherPanel" aria-label="Current weather" hidden>
+      <div class="current-weather">
+        <div class="current-copy">
+          <p class="eyebrow" id="weatherLabel">CURRENT WEATHER</p>
+          <h2 id="placeName">--</h2>
+          <p class="weather-description" id="weatherDescription">--</p>
+          <p class="feels-like" id="feelsLike">Feels like --°</p>
+        </div>
+        <div class="temperature-wrap">
+          <span class="weather-symbol" id="weatherSymbol" aria-hidden="true">☀</span>
+          <p class="temperature"><span id="temperature">--</span><span class="degree">°C</span></p>
+        </div>
+      </div>
+      <div class="metrics">
+        <article class="metric"><span class="metric-icon" aria-hidden="true">↗</span><span class="metric-label">Wind speed</span><strong id="windSpeed">-- km/h</strong></article>
+        <article class="metric"><span class="metric-icon" aria-hidden="true">◌</span><span class="metric-label">Humidity</span><strong id="humidity">--%</strong></article>
+        <article class="metric"><span class="metric-icon" aria-hidden="true">☼</span><span class="metric-label">UV index</span><strong id="uvIndex">--</strong></article>
+      </div>
+    </section>
+
+    <section class="forecast-section" id="forecastSection" aria-labelledby="forecastTitle" hidden>
+      <div class="section-heading"><div><p class="eyebrow">PLAN AHEAD</p><h2 id="forecastTitle">5-day forecast</h2></div><span class="section-caption">Daily outlook</span></div>
+      <div class="forecast-grid" id="forecastGrid"></div>
+    </section>
+
+    <footer><span>ClimaAlert</span><span>Weather data by Open-Meteo</span></footer>
+  </main>
+</body>
+</html>
